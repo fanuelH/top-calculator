@@ -66,6 +66,10 @@ body {
   background-color: #b67cc4;
   color: whitesmoke;
 }
+.colored-btn:hover {
+  background-color: rgb(182, 124, 196, 0.8);
+}
+
 .colored-text {
   color: #b67cc4;
 }
