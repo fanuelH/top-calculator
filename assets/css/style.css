@@ -60,8 +60,13 @@ body {
 
 .larger-btn {
   height: 139px;
-  border-bottom-right-radius: 20px;
+  border-bottom-right-radius: 15px;
 }
+
+.left-bottom-btn {
+  border-bottom-left-radius: 10px;
+}
+
 .colored-btn {
   background-color: #b67cc4;
   color: whitesmoke;
