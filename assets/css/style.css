@@ -3,3 +3,43 @@
   padding: 0;
   margin: 0;
 }
+body {
+  background-color: #793888;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.main-container {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  width: 350px;
+  height: 600px;
+  border: 5px solid white;
+  border-radius: 25px;
+  margin: 5px 0;
+}
+
+.display-container {
+  background-color: #2b2e37;
+  flex-basis: 40%;
+  color: rgb(184, 184, 184);
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  padding-right: 5%;
+  padding-bottom: 10%;
+}
+.operation-container {
+  font-size: 1.2rem;
+}
+.result-container {
+  font-size: 3.5rem;
+}
+.buttons-container {
+  background-color: #394050;
+  flex-basis: 60%;
+}
