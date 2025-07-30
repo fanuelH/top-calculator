@@ -53,6 +53,11 @@ body {
   border-radius: 5px;
   font-size: 1.2rem;
 }
+
+.btn:hover {
+  background-color: rgba(240, 234, 234, 0.8);
+}
+
 .larger-btn {
   height: 139px;
   border-bottom-right-radius: 20px;
