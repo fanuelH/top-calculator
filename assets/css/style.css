@@ -47,6 +47,7 @@ body {
   justify-content: center;
 }
 .btn {
+  color: rgb(155, 155, 155);
   width: 83px;
   height: 68px;
   border-radius: 5px;
