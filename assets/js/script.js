@@ -11,24 +11,12 @@ const displayResult = document.querySelector("#display-result");
 
 btn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    if (operands.length === 0 && OPERATORS.includes(e.target.innerText)) {
-      alert("invalid input");
-      return;
-    }
-
     if (result && OPERATORS.includes(e.target.innerText)) {
       operands = [result.toString()];
       displayOps.innerText = result;
       displayResult.innerText = "";
     }
-
-    if (OPERATORS.includes(e.target.innerText)) {
-      if (OPERATORS.includes(operands[operands.length - 1])) {
-        alert("invalid input");
-        return;
-      }
-    }
-
+    if (errorHandler(e)) return;
     if (e.target.innerText === "AC") return clearDisplay();
     if (e.target.innerText === "C") clearLast();
 
@@ -66,6 +54,20 @@ function showResult(e) {
       operands.push(result);
     }
   }
+}
+
+function errorHandler(e) {
+  if (operands.length === 0 && OPERATORS.includes(e.target.innerText)) {
+    alert("invalid input");
+    return true;
+  }
+  if (OPERATORS.includes(e.target.innerText)) {
+    if (OPERATORS.includes(operands[operands.length - 1])) {
+      alert("invalid input");
+      return true;
+    }
+  }
+  return false;
 }
 
 function clearLast() {
