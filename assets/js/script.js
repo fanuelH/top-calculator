@@ -1,5 +1,7 @@
 const OPERATORS = ["x", "÷", "+", "-"];
 let preValue;
+let curValue;
+let curOperator;
 let result;
 let operands = [];
 
@@ -9,20 +11,50 @@ const displayResult = document.querySelector("#display-result");
 
 btn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    if (e.target.innerText === "AC") return clearDisplay();
-    if (e.target.innerText === "C") clearLast();
+    if (operands.length === 0 && OPERATORS.includes(e.target.innerText)) {
+      operands.pop();
+      alert("invalid input");
+      return;
+    }
+
     if (result && OPERATORS.includes(e.target.innerText)) {
+      operands = [result.toString()];
       displayOps.innerText = result;
       displayResult.innerText = "";
     }
+
+    if (OPERATORS.includes(e.target.innerText)) {
+      if (OPERATORS.includes(operands[operands.length - 1])) {
+        alert("invalid input");
+        return;
+      }
+    }
+
+    if (e.target.innerText === "AC") return clearDisplay();
+    if (e.target.innerText === "C") clearLast();
+
+    if (OPERATORS.includes(e.target.innerText) || operands.length == 1) {
+      curOperator = e.target.innerText;
+    }
+
     setInput(e.target);
     if (e.target.innerText === "=") {
       if (operands.length >= 3) {
+        let storedOperands = operands
+          .reduce((acc, item) => acc + item)
+          .split(/[x÷+\-]/);
+
         displayResult.innerText = `${operate(
-          parseInt(operands[0]),
-          operands[1],
-          parseInt(operands[2])
+          Number(storedOperands[0]),
+          curOperator,
+          Number(storedOperands[1])
         )}`;
+
+        preValue = storedOperands[0];
+        curOperator = operands[1];
+        curValue = storedOperands[1];
+        operands = [];
+        operands.push(result);
       }
     }
   });
@@ -36,9 +68,19 @@ function setInput(target) {
 }
 
 function clearLast() {
-  operands.pop();
+  if (displayOps.innerText) {
+    operands = displayOps.innerText.split("");
+    operands.pop();
+    const operatorMatch = displayOps.innerText.match(/[x÷+\-]/);
+    curOperator = operatorMatch ? operatorMatch[0] : undefined;
+  }
+
+  if (displayResult) {
+    displayResult.innerText = "";
+  }
+
   displayOps.innerText = operands.join("");
-  if (operands.length <= 2) displayResult.innerText = "";
+  result = 0;
 }
 
 function clearDisplay() {
@@ -52,29 +94,27 @@ function clearDisplay() {
 function add(num1, num2) {
   result = num1 + num2;
   operands = [];
-  operands.push(result);
   return result;
 }
 
 function subtract(num1, num2) {
   result = num1 - num2;
   operands = [];
-  operands.push(result);
   return result;
 }
 
 function multiply(num1, num2) {
   result = num1 * num2;
   operands = [];
-  operands.push(result);
   return result;
 }
 
 function divide(num1, num2) {
-  if (num2 === 0) return "can't divide by 0";
+  if (num2 === 0) {
+    alert("can't divide by 0");
+  }
   result = num1 / num2;
   operands = [];
-  operands.push(result);
   return result;
 }
 
