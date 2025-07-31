@@ -38,23 +38,7 @@ btn.forEach((btn) => {
     }
 
     setInput(e.target);
-    if (e.target.innerText === "=") {
-      if (operands.length >= 3) {
-        let expression = operands.join("");
-        let [left, right] = expression.split(/[x÷+\-]/);
-        displayResult.innerText = `${operate(
-          Number(left),
-          curOperator,
-          Number(right)
-        )}`;
-
-        preValue = expression[0];
-        curOperator = operands[1];
-        curValue = expression[1];
-        operands = [];
-        operands.push(result);
-      }
-    }
+    showResult(e);
   });
 });
 
@@ -63,6 +47,26 @@ function setInput(target) {
   preValue = target.innerText;
   operands.push(preValue);
   return (displayOps.innerText += target.innerText);
+}
+
+function showResult(e) {
+  if (e.target.innerText === "=") {
+    if (operands.length >= 3) {
+      let expression = operands.join("");
+      let [left, right] = expression.split(/[x÷+\-]/);
+      displayResult.innerText = `${operate(
+        Number(left),
+        curOperator,
+        Number(right)
+      )}`;
+
+      preValue = expression[0];
+      curOperator = operands[1];
+      curValue = expression[1];
+      operands = [];
+      operands.push(result);
+    }
+  }
 }
 
 function clearLast() {
