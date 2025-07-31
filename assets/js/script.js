@@ -40,19 +40,17 @@ btn.forEach((btn) => {
     setInput(e.target);
     if (e.target.innerText === "=") {
       if (operands.length >= 3) {
-        let storedOperands = operands
-          .reduce((acc, item) => acc + item)
-          .split(/[x÷+\-]/);
-
+        let expression = operands.join("");
+        let [left, right] = expression.split(/[x÷+\-]/);
         displayResult.innerText = `${operate(
-          Number(storedOperands[0]),
+          Number(left),
           curOperator,
-          Number(storedOperands[1])
+          Number(right)
         )}`;
 
-        preValue = storedOperands[0];
+        preValue = expression[0];
         curOperator = operands[1];
-        curValue = storedOperands[1];
+        curValue = expression[1];
         operands = [];
         operands.push(result);
       }
