@@ -92,19 +92,19 @@ function clearDisplay() {
 function add(num1, num2) {
   result = num1 + num2;
   operands = [];
-  return result;
+  return formatNumber(result);
 }
 
 function subtract(num1, num2) {
   result = num1 - num2;
   operands = [];
-  return result;
+  return formatNumber(result);
 }
 
 function multiply(num1, num2) {
   result = num1 * num2;
   operands = [];
-  return result;
+  return formatNumber(result);
 }
 
 function divide(num1, num2) {
@@ -113,7 +113,7 @@ function divide(num1, num2) {
   }
   result = num1 / num2;
   operands = [];
-  return result;
+  return formatNumber(result);
 }
 
 function operate(num1, ope, num2) {
@@ -127,4 +127,8 @@ function operate(num1, ope, num2) {
     case `-`:
       return subtract(num1, num2);
   }
+}
+
+function formatNumber(num) {
+  return Number.isInteger(num) ? num : parseFloat(num.toFixed(2));
 }
