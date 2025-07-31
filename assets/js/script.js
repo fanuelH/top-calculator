@@ -12,7 +12,6 @@ const displayResult = document.querySelector("#display-result");
 btn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     if (operands.length === 0 && OPERATORS.includes(e.target.innerText)) {
-      operands.pop();
       alert("invalid input");
       return;
     }
