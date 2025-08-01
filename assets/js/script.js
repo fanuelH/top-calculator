@@ -66,6 +66,15 @@ function errorHandler(e) {
       alert("invalid input");
       return true;
     }
+    if (operands.includes(e.target.innerText)) {
+      if (
+        operands.length >= 3 &&
+        !OPERATORS.includes(operands[operands - 1]) &&
+        OPERATORS.includes(e.target.innerText)
+      ) {
+        return true;
+      }
+    }
   }
   return false;
 }
