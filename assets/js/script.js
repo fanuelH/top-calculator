@@ -32,6 +32,9 @@ btn.forEach((btn) => {
 function setInput(target) {
   if (target.innerText === "C" || target.innerText === "=") return;
   if (target.innerText === ".") {
+    if (operands.length === 0) {
+      displayOps.innerText = "0";
+    }
     const lastNumber = operands
       .slice()
       .reverse()
@@ -91,13 +94,6 @@ function errorHandler(e) {
       }
     }
   }
-  if (e.target.innerText === ".") {
-    if (operands.length === 0 || operands[operands.length - 1] === ".") {
-      alert("invalid input");
-      return true;
-    }
-  }
-
   if (
     operands[operands.length - 1] === "." &&
     OPERATORS.includes(e.target.innerText)
