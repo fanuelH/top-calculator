@@ -82,6 +82,15 @@ function errorHandler(e) {
       return true;
     }
   }
+
+  if (
+    operands[operands.length - 1] === "." &&
+    OPERATORS.includes(e.target.innerText)
+  ) {
+    alert("invalid input");
+    return true;
+  }
+
   return false;
 }
 
