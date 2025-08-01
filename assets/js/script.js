@@ -69,7 +69,7 @@ function errorHandler(e) {
     if (OPERATORS.includes(e.target.innerText)) {
       if (
         operands.length >= 3 &&
-        !OPERATORS.includes(operands[operands - 1]) &&
+        !OPERATORS.includes(operands[operands.length - 1]) &&
         OPERATORS.includes(e.target.innerText)
       ) {
         return true;
