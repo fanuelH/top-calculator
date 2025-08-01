@@ -31,6 +31,17 @@ btn.forEach((btn) => {
 
 function setInput(target) {
   if (target.innerText === "C" || target.innerText === "=") return;
+  if (target.innerText === ".") {
+    const lastNumber = operands
+      .slice()
+      .reverse()
+      .join("")
+      .split(/[x÷+\-]/)[0];
+    if (lastNumber.includes(".")) {
+      alert("invalid input");
+      return;
+    }
+  }
   preValue = target.innerText;
   operands.push(preValue);
   return (displayOps.innerText += target.innerText);
@@ -72,9 +83,10 @@ function errorHandler(e) {
     if (OPERATORS.includes(e.target.innerText)) {
       if (
         operands.length >= 3 &&
-        !OPERATORS.includes(operands[operands.length - 1]) &&
+        OPERATORS.includes(operands[operands.length - 1]) &&
         OPERATORS.includes(e.target.innerText)
       ) {
+        alert("invalid input");
         return true;
       }
     }
