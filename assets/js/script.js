@@ -11,7 +11,6 @@ const displayResult = document.querySelector("#display-result");
 
 btn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    if (result && !OPERATORS.includes(e.target.innerText)) clearDisplay();
     if (result && OPERATORS.includes(e.target.innerText)) {
       operands = [result.toString()];
       displayOps.innerText = result;
@@ -24,7 +23,7 @@ btn.forEach((btn) => {
     if (OPERATORS.includes(e.target.innerText) || operands.length == 1) {
       curOperator = e.target.innerText;
     }
-
+    if (result && !OPERATORS.includes(e.target.innerText)) clearDisplay();
     setInput(e.target);
     showResult(e);
   });
