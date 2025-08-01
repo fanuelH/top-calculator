@@ -76,9 +76,11 @@ function errorHandler(e) {
       }
     }
   }
-  if (operands.length === 0 && e.target.innerText === ".") {
-    alert("invalid input");
-    return true;
+  if (e.target.innerText === ".") {
+    if (operands.length === 0 || operands[operands.length - 1] === ".") {
+      alert("invalid input");
+      return true;
+    }
   }
   return false;
 }
