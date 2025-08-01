@@ -38,7 +38,10 @@ function setInput(target) {
 
 function showResult(e) {
   if (e.target.innerText === "=") {
-    if (operands.length >= 3) {
+    if (
+      operands.length >= 3 &&
+      !OPERATORS.includes(operands[operands.length - 1])
+    ) {
       let expression = operands.join("");
       let [left, right] = expression.split(/[x÷+\-]/);
       displayResult.innerText = `${operate(
