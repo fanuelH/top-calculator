@@ -1,13 +1,44 @@
 const OPERATORS = ["x", "÷", "+", "-"];
+const btn = document.querySelectorAll("button");
+const displayOps = document.querySelector("#display-ops");
+const displayResult = document.querySelector("#display-result");
 let preValue;
 let curValue;
 let curOperator;
 let result;
 let operands = [];
+const isDigit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const isKeys = ["x", "÷", "+", "-", ".", "=", "C", "AC"];
 
-const btn = document.querySelectorAll("button");
-const displayOps = document.querySelector("#display-ops");
-const displayResult = document.querySelector("#display-result");
+document.addEventListener("keydown", (e) => {
+  let key = e.key;
+  const keyMap = {
+    "*": "x",
+    "/": "÷",
+    Enter: "=",
+    Backspace: "C",
+    Escape: "AC",
+  };
+  let keyValue = keyMap[key] || key;
+  let fakeTarget = { innerText: keyValue };
+
+  if (!isDigit.includes(Number(keyValue)) && !isKeys.includes(keyValue)) return;
+
+  if (result && OPERATORS.includes(fakeTarget.innerText)) {
+    operands = [result.toString()];
+    displayOps.innerText = result;
+    displayResult.innerText = "";
+  }
+  if (errorHandler({ target: fakeTarget })) return;
+  if (fakeTarget.innerText === "AC") return clearDisplay();
+  if (fakeTarget.innerText === "C") clearLast();
+
+  if (OPERATORS.includes(fakeTarget.innerText) || operands.length == 1) {
+    curOperator = fakeTarget.innerText;
+  }
+  setInput(fakeTarget);
+  showResult({ target: fakeTarget });
+});
 
 btn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -23,7 +54,6 @@ btn.forEach((btn) => {
     if (OPERATORS.includes(e.target.innerText) || operands.length == 1) {
       curOperator = e.target.innerText;
     }
-    if (result && !OPERATORS.includes(e.target.innerText)) clearDisplay();
     setInput(e.target);
     showResult(e);
   });
@@ -84,11 +114,7 @@ function errorHandler(e) {
       return true;
     }
     if (OPERATORS.includes(e.target.innerText)) {
-      if (
-        operands.length >= 3 &&
-        OPERATORS.includes(operands[operands.length - 1]) &&
-        OPERATORS.includes(e.target.innerText)
-      ) {
+      if (operands.length >= 3 && operands.join("").match(/[x÷+\-]/)) {
         alert("invalid input");
         return true;
       }
