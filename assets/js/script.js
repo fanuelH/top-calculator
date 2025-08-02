@@ -42,6 +42,7 @@ document.addEventListener("keydown", (e) => {
 
 btn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
+    if (e.target.innerText === "%") return;
     multipleOperatorHandler(e);
     if (result && OPERATORS.includes(e.target.innerText)) {
       operands = [result.toString()];
