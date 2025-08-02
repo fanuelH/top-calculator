@@ -23,7 +23,7 @@ document.addEventListener("keydown", (e) => {
   let fakeTarget = { innerText: keyValue };
 
   if (!isDigit.includes(Number(keyValue)) && !isKeys.includes(keyValue)) return;
-
+  multipleOperatorHandler({ target: fakeTarget });
   if (result && OPERATORS.includes(fakeTarget.innerText)) {
     operands = [result.toString()];
     displayOps.innerText = result;
@@ -42,6 +42,7 @@ document.addEventListener("keydown", (e) => {
 
 btn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
+    multipleOperatorHandler(e);
     if (result && OPERATORS.includes(e.target.innerText)) {
       operands = [result.toString()];
       displayOps.innerText = result;
@@ -80,6 +81,28 @@ function setInput(target) {
   return (displayOps.innerText += target.innerText);
 }
 
+function multipleOperatorHandler(e) {
+  if (OPERATORS.includes(e.target.innerText)) {
+    if (operands.length >= 3 && operands.join("").match(/[x÷+\-]/)) {
+      if (!OPERATORS.includes(operands[operands.length - 1])) {
+        let expression = operands.join("");
+        let [left, right] = expression.split(/[x÷+\-]/);
+        displayResult.innerText = `${operate(
+          Number(left),
+          curOperator,
+          Number(right)
+        )}`;
+
+        preValue = expression[0];
+        curOperator = operands[1];
+        curValue = expression[1];
+        operands = [];
+        operands.push(result);
+      }
+    }
+  }
+}
+
 function showResult(e) {
   if (e.target.innerText === "=") {
     if (
@@ -112,12 +135,6 @@ function errorHandler(e) {
     if (OPERATORS.includes(operands[operands.length - 1])) {
       alert("invalid input");
       return true;
-    }
-    if (OPERATORS.includes(e.target.innerText)) {
-      if (operands.length >= 3 && operands.join("").match(/[x÷+\-]/)) {
-        alert("invalid input");
-        return true;
-      }
     }
   }
   if (
